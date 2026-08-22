@@ -176,6 +176,9 @@
     .icon-stars { color: #FFD54F; }
     .icon-palette { color: #CE93D8; }
     .icon-play { color: #FF1744; }
+    .icon-star { color: #FFD700; }
+    .icon-chat-quote { color: #CE93D8; }
+    .icon-person { color: #81D4FA; }
 
     .cta-block {
       display: flex;
@@ -330,6 +333,149 @@
       color: #FF1744;
     }
 
+    /* ===== TESTIMONIALS STYLES ===== */
+    .testimonials {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #3a2c68;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      color: #e3daff;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title i {
+      font-size: 2rem;
+      color: #CE93D8;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-item {
+      background: rgba(22, 18, 48, 0.60);
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      border: 1px solid #4b3b7a;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .testimonial-item:hover {
+      transform: translateY(-4px);
+      border-color: #7d66d0;
+      box-shadow: 0 12px 30px rgba(90, 60, 200, 0.2);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 1rem;
+      background: #0a0818;
+      margin-bottom: 0.8rem;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 1rem;
+    }
+
+    .testimonial-item .stars {
+      color: #FFD700;
+      font-size: 0.9rem;
+      letter-spacing: 0.15rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .testimonial-item .stars i {
+      font-size: 0.9rem;
+      color: #FFD700;
+    }
+
+    .testimonial-item p {
+      font-size: 1rem;
+      color: #d7cef7;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-item p::before {
+      content: '"';
+      color: #7d66d0;
+      font-size: 1.2rem;
+    }
+
+    .testimonial-item p::after {
+      content: '"';
+      color: #7d66d0;
+      font-size: 1.2rem;
+    }
+
+    .testimonial-item .name {
+      font-weight: 500;
+      color: #b7a3f5;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-item .name i {
+      color: #81D4FA;
+      font-size: 1.1rem;
+    }
+
+    .testimonial-item .channel-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(48, 37, 100, 0.4);
+      padding: 0.15rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      color: #b7a3f5;
+      border: 1px solid #4f3d86;
+      margin-top: 0.4rem;
+    }
+
+    .testimonial-item .channel-tag i {
+      font-size: 0.7rem;
+    }
+
+    .demo-note {
+      text-align: center;
+      color: #9487c7;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .demo-note i {
+      color: #FF1744;
+      font-size: 1.1rem;
+    }
+
     @media (max-width: 650px) {
       .hero {
         padding: 2rem 1.2rem;
@@ -363,6 +509,15 @@
       .cta-block {
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
       }
     }
 
@@ -462,40 +617,102 @@
     <div class="cta-block">
       <!-- WhatsApp Button -->
       <a class="btn-whatsapp" href="https://wa.me/917731969824?text=Hi%2C%20I%20want%20autopilot%20live%20for%20my%20channel" target="_blank">
-        <i class="bi bi-whatsapp icon-whatsapp" style="color: #FFFFFF;"></i> Chat in WhatsApp
+        <i class="bi bi-whatsapp" style="color: #FFFFFF;"></i> Chat in WhatsApp
       </a>
       
       <!-- Google Form Button -->
       <a class="btn-google" href="https://forms.gle/mGdmb18fSrEVYZFc8" target="_blank">
-        <i class="bi bi-google icon-google" style="color: #FFFFFF;"></i> Fill in Google Form
+        <i class="bi bi-google" style="color: #FFFFFF;"></i> Fill in Google Form
+      </a>
+    </div>
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <div class="testimonials">
+      <h2 class="section-title"><i class="bi bi-chat-quote-fill icon-chat-quote"></i> Live Demos &amp; Client Streams</h2>
+      <div class="testimonial-grid">
+        
+        <!-- Video 1 -->
+        <div class="testimonial-item">
+          <div class="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/RnEQ4-YTddI?si=Ud5lb1fhpvQ8EvTn" 
+              title="Aikyam Spiritual Center - 24/7 live chanting"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="stars"><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i></div>
+          <p>Autopilot video 10x my watch time.</p>
+          <div class="name"><i class="bi bi-person-circle icon-person"></i> Aikyam Spiritual Center</div>
+          <div class="channel-tag"><i class="bi bi-lightning-fill" style="color: #FFD700;"></i> 24/7 live chanting</div>
+        </div>
+        
+        <!-- Video 2 -->
+        <div class="testimonial-item">
+          <div class="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/x5U2JCTiNng?si=p7PzFJ12jBox5BB5" 
+              title="Bhaskhar D - 24/7 live chanting"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="stars"><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i></div>
+          <p>No hardware, just stream key. I'm earning more.</p>
+          <div class="name"><i class="bi bi-person-circle icon-person"></i> Bhaskhar D</div>
+          <div class="channel-tag"><i class="bi bi-fire" style="color: #FF6D00;"></i> 24/7 live chanting</div>
+        </div>
+        
+        <!-- Video 3 -->
+        <div class="testimonial-item">
+          <div class="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/x5U2JCTiNng?si=p7PzFJ12jBox5BB5" 
+              title="Bhaskhar D - 24/7 live news"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="stars"><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i><i class="bi bi-star-fill icon-star"></i></div>
+          <p>JSON news integration worked flawlessly.</p>
+          <div class="name"><i class="bi bi-person-circle icon-person"></i> Bhaskhar D</div>
+          <div class="channel-tag"><i class="bi bi-newspaper" style="color: #81D4FA;"></i> 24/7 live news</div>
+        </div>
+        
+      </div>
+      <div class="demo-note">
+        <i class="bi bi-play-circle-fill icon-play"></i> Click any video to watch live demo (sample streams)
+      </div>
+    </div>
+
+	<!-- CTA: WhatsApp + Google Form buttons -->
+    <div class="cta-block">
+      <!-- WhatsApp Button -->
+      <a class="btn-whatsapp" href="https://wa.me/917731969824?text=Hi%2C%20I%20want%20autopilot%20live%20for%20my%20channel" target="_blank">
+        <i class="bi bi-whatsapp" style="color: #FFFFFF;"></i> Chat in WhatsApp
+      </a>
+      
+      <!-- Google Form Button -->
+      <a class="btn-google" href="https://forms.gle/mGdmb18fSrEVYZFc8" target="_blank">
+        <i class="bi bi-google" style="color: #FFFFFF;"></i> Fill in Google Form
       </a>
     </div>
 
     <!-- footnote -->
     <div class="footnote">
-      <!-- <span>
-        <span style="background: #2f2459; padding: 0.2rem 1rem; border-radius: 40px;">
-          <i class="bi bi-satellite icon-satellite"></i>
-        </span> 
-        <span><i class="bi bi-robot icon-robot"></i> Autopilot · Cloud RTMP · No local PC</span>
-      </span> -->
       <span class="badge">
         <i><i class="bi bi-film icon-film"></i> continuous loops</i>
         <i><i class="bi bi-gear-fill icon-gear"></i> auto-maintenance</i>
         <i><i class="bi bi-graph-up-arrow icon-graph"></i> 20x watch time</i>
-		<i><i class="bi bi-graph-up-arrow icon-graph"></i> zero hardware</i>
+        <i><i class="bi bi-cpu icon-cpu"></i> zero hardware</i>
       </span>
       <span style="opacity: 0.8;">
         <i class="bi bi-clock-history icon-clock"></i> © 2026 · 24/7 Auto RTMP Live
       </span>
     </div>
-
-    <!-- extra footer -->
-    <!-- <div style="display: flex; justify-content: flex-end; margin-top: 0.2rem; font-size: 0.7rem; color: #5e4d93; letter-spacing: 0.5px; gap: 1.2rem;">
-      <span><i class="bi bi-arrows-fullscreen icon-arrows"></i> fit to screen</span>
-      <span><i class="bi bi-stars icon-stars"></i> unique</span>
-      <span><i class="bi bi-palette-fill icon-palette"></i> same color</span>
-    </div> -->
   </div>
 
   <script>
