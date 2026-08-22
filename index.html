@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>24/7 Auto RTMP Live Stream Management</title>
+  <!-- Bootstrap Icons CDN (v1.11.3) – crisp, consistent icon set -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0f0c1f;
+      color: #d9d2f0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: radial-gradient(circle at 20% 30%, #1e1740, #0a0818 90%);
+    }
+
+    .hero {
+      max-width: 1300px;
+      width: 100%;
+      background: rgba(22, 18, 48, 0.70);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: 3.5rem;
+      padding: 2.8rem 3rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px #3d3070 inset;
+      border: 1px solid #4b3b7a;
+      transition: all 0.2s;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 10vw, 4.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #ece6ff;
+      text-shadow: 0 4px 20px rgba(90, 70, 180, 0.4);
+      margin-bottom: 0.65rem;
+      word-break: break-word;
+    }
+
+    .highlight {
+      background: linear-gradient(145deg, #a994ff, #b8a5ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 25px #6f5ac0;
+      display: inline-block;
+    }
+
+    .subhead {
+      font-size: clamp(1.1rem, 3.5vw, 1.7rem);
+      font-weight: 400;
+      color: #c9bef5;
+      max-width: 880px;
+      margin: 0.8rem 0 1.6rem 0;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .feature-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem 2rem;
+      margin: 2rem 0 2.2rem 0;
+      padding: 0.25rem 0;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(48, 37, 100, 0.3);
+      padding: 0.3rem 1.2rem 0.3rem 0.9rem;
+      border-radius: 60px;
+      border: 1px solid #4f3d86;
+      backdrop-filter: blur(2px);
+      font-weight: 450;
+      color: #d7cef7;
+      font-size: clamp(0.9rem, 1.7vw, 1.2rem);
+    }
+
+    .feature-item i {
+      font-size: 1.3rem;
+    }
+
+    .badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.6rem;
+      margin: 1.5rem 0 2.2rem 0;
+      align-items: center;
+    }
+
+    .badge {
+      background: #27204f;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: clamp(0.8rem, 1.4vw, 1rem);
+      border: 1px solid #5b4a94;
+      color: #d1c6fc;
+      letter-spacing: 0.3px;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge i {
+      font-size: 1rem;
+    }
+
+    .badge strong {
+      color: #e0d6ff;
+      font-weight: 600;
+    }
+
+    /* ===== BRAND COLORS FOR ICONS ===== */
+    .icon-youtube { color: #FF0000; }
+    .icon-facebook { color: #1877F2; }
+    .icon-linkedin { color: #0A66C2; }
+    .icon-twitch { color: #9146FF; }
+    .icon-kick { color: #53FC18; }
+    .icon-broadcast { color: #00D4FF; }
+    .icon-uptime { color: #00E676; }
+    .icon-whatsapp { color: #25D366; }
+    .icon-google { color: #EA4335; }
+    .icon-lightning { color: #FFD700; }
+    .icon-people { color: #4FC3F7; }
+    .icon-coin { color: #FFD700; }
+    .icon-cloud-upload { color: #64B5F6; }
+    .icon-link { color: #81D4FA; }
+    .icon-cloud-arrow { color: #64B5F6; }
+    .icon-robot { color: #81C784; }
+    .icon-film { color: #FF7043; }
+    .icon-gear { color: #FFA726; }
+    .icon-graph { color: #66BB6A; }
+    .icon-clock { color: #90CAF9; }
+    .icon-cpu { color: #CE93D8; }
+    .icon-satellite { color: #4DD0E1; }
+    .icon-arrows { color: #90A4AE; }
+    .icon-stars { color: #FFD54F; }
+    .icon-palette { color: #CE93D8; }
+    .icon-play { color: #FF1744; }
+
+    .cta-block {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.8rem 2.5rem;
+      margin-top: 1.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #3a2c68;
+    }
+
+    .cta-input-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.8rem;
+      background: #19133b;
+      padding: 0.3rem 0.3rem 0.3rem 1.5rem;
+      border-radius: 80px;
+      border: 1px solid #5b489b;
+      box-shadow: 0 0 20px rgba(80, 50, 180, 0.2);
+      flex: 1 1 340px;
+    }
+
+    .cta-input-group i {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .cta-input-group input {
+      background: transparent;
+      border: none;
+      padding: 0.7rem 0.3rem;
+      font-size: 1rem;
+      color: #ede7ff;
+      outline: none;
+      flex: 1;
+      min-width: 140px;
+      font-weight: 400;
+    }
+
+    .cta-input-group input::placeholder {
+      color: #8477b5;
+      font-weight: 300;
+      letter-spacing: 0.2px;
+    }
+
+    /* Button styles for WhatsApp & Google Form */
+    .btn-whatsapp {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-whatsapp:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+
+    .btn-google {
+      background: #EA4335;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4);
+    }
+
+    .btn-google:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 25px rgba(234, 67, 53, 0.6);
+    }
+
+    .btn-google i, .btn-whatsapp i {
+      font-size: 1.3rem;
+    }
+
+    .footnote {
+      font-size: 0.9rem;
+      color: #9487c7;
+      margin-top: 1.8rem;
+      border-top: 1px dashed #3b2d68;
+      padding-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .footnote span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .footnote i {
+      font-style: normal;
+      background: #2d2357;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: #cbbdfa;
+      border: 1px solid #4b397a;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .footnote i i {
+      background: transparent;
+      padding: 0;
+      border: none;
+      font-size: 0.9rem;
+    }
+
+    .inline-icon-badge {
+      background: rgba(255, 23, 68, 0.15);
+      padding: 0.2rem 1.2rem;
+      border-radius: 60px;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0.7em;
+      border: 1px solid rgba(255, 23, 68, 0.3);
+      backdrop-filter: blur(4px);
+    }
+
+    .inline-icon-badge i {
+      margin-right: 0.3rem;
+    }
+
+    .inline-icon-badge .icon-play {
+      color: #FF1744;
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+        padding: 2rem 1.2rem;
+        border-radius: 2.5rem;
+      }
+
+      .cta-input-group {
+        flex: 1 1 100%;
+        padding-left: 1.2rem;
+      }
+
+      .btn-whatsapp, .btn-google {
+        width: 100%;
+        justify-content: center;
+        padding: 0.9rem;
+      }
+
+      .feature-grid {
+        gap: 0.8rem;
+      }
+
+      .feature-item {
+        padding: 0.2rem 1rem 0.2rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .badge-group {
+        gap: 0.5rem 1rem;
+      }
+
+      .cta-block {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    @media (max-width: 420px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .subhead {
+        font-size: 1rem;
+      }
+      .cta-input-group input {
+        min-width: 100px;
+        font-size: 0.9rem;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #1b1538;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #58469b;
+      border-radius: 20px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7b64cf;
+    }
+
+    a, .fake-link {
+      color: #ccbfff;
+      text-decoration: none;
+    }
+
+    .icon-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+
+    <!-- Header -->
+    <h1>
+      Run Your <span class="highlight">any RTMP</span> Live Streams<br>
+      24/7 <span style="color:#b7a3f5;">without hardware</span> 
+      <span class="inline-icon-badge">
+        <i class="bi bi-play-circle-fill icon-play"></i> on autopilot
+      </span>
+    </h1>
+
+    <!-- sub-headline -->
+    <div class="subhead">
+      <i class="bi bi-lightning-fill icon-lightning" style="margin-right: 0.2rem;"></i> 
+      Do you want to boost your channel's watch time, algorithmic reach, and audience engagement 
+      <br class="hide-on-mobile">without keeping your local computer running or worrying about crashes?
+    </div>
+
+    <!-- feature row -->
+    <div class="feature-grid">
+      <div class="feature-item"><i class="bi bi-people-fill icon-people"></i> Attract more visitors</div>
+      <div class="feature-item"><i class="bi bi-coin icon-coin"></i> Monetize effortlessly</div>
+      <div class="feature-item"><i class="bi bi-cloud-upload-fill icon-cloud-upload"></i> We handle streaming, maintenance & updates</div>
+    </div>
+
+    <!-- just provide stream url & key -->
+    <div style="background: #221c46; border-radius: 80px; padding: 0.6rem 1.8rem; display: inline-block; border: 1px solid #4f3b8a; margin-bottom: 0.8rem; backdrop-filter: blur(4px);">
+      <span style="color: #d6caff; font-weight: 400; letter-spacing: 0.5px;">
+        <i class="bi bi-link-45deg icon-link" style="margin-right: 0.4rem;"></i> Just provide the stream url and key.
+      </span>
+    </div>
+
+    <!-- 24/7 Cloud RTMP & Live Stream Management -->
+    <h2 style="font-size: clamp(1.7rem, 4.5vw, 2.8rem); font-weight: 600; color: #e3daff; margin-top: 1.8rem; letter-spacing: -0.3px; border-left: 6px solid #8b77df; padding-left: 1.2rem;">
+      <i class="bi bi-cloud-arrow-up-fill icon-cloud-arrow" style="margin-right: 0.5rem;"></i> 24/7 Auto RTMP Live Stream Management
+    </h2>
+
+    <!-- description -->
+    <p style="font-size: clamp(1rem, 2vw, 1.25rem); max-width: 900px; color: #c9bef0; line-height: 1.6; margin: 0.8rem 0 0.4rem 0;">
+      Take your channel to the next level with our fully automated, 24/7 cloud-hosted streaming infrastructure. 
+      Whether you want to broadcast continuous video loops to YouTube Live, Facebook, LinkedIn, Twitch, Kick or any custom RTMP destination, we handle the technical hosting and uptime monitoring around the clock—<strong style="color: #ddd2ff;">completely zero local computer usage required!</strong>
+    </p>
+
+    <!-- badge group: platforms & uptime – with brand colors -->
+    <div class="badge-group">
+      <span class="badge"><i class="bi bi-youtube icon-youtube"></i> YouTube</span>
+      <span class="badge"><i class="bi bi-facebook icon-facebook"></i> Facebook</span>
+      <span class="badge"><i class="bi bi-linkedin icon-linkedin"></i> LinkedIn</span>
+      <span class="badge"><i class="bi bi-twitch icon-twitch"></i> Twitch</span>
+      <span class="badge"><i class="bi bi-fire" style="color: #FF6D00;"></i> Kick</span>
+      <span class="badge"><i class="bi bi-broadcast icon-broadcast"></i> Custom RTMP</span>
+      <span class="badge" style="background: #2d215b; border-color: #7560bb;"><i class="bi bi-arrow-repeat icon-uptime"></i> 24/7 Uptime</span>
+    </div>
+
+    <!-- CTA: WhatsApp + Google Form buttons -->
+    <div class="cta-block">
+      <!-- WhatsApp Button -->
+      <a class="btn-whatsapp" href="https://wa.me/917731969824?text=Hi%2C%20I%20want%20autopilot%20live%20for%20my%20channel" target="_blank">
+        <i class="bi bi-whatsapp icon-whatsapp" style="color: #FFFFFF;"></i> Chat in WhatsApp
+      </a>
+      
+      <!-- Google Form Button -->
+      <a class="btn-google" href="https://forms.gle/mGdmb18fSrEVYZFc8" target="_blank">
+        <i class="bi bi-google icon-google" style="color: #FFFFFF;"></i> Fill in Google Form
+      </a>
+    </div>
+
+    <!-- footnote -->
+    <div class="footnote">
+      <!-- <span>
+        <span style="background: #2f2459; padding: 0.2rem 1rem; border-radius: 40px;">
+          <i class="bi bi-satellite icon-satellite"></i>
+        </span> 
+        <span><i class="bi bi-robot icon-robot"></i> Autopilot · Cloud RTMP · No local PC</span>
+      </span> -->
+      <span class="badge">
+        <i><i class="bi bi-film icon-film"></i> continuous loops</i>
+        <i><i class="bi bi-gear-fill icon-gear"></i> auto-maintenance</i>
+        <i><i class="bi bi-graph-up-arrow icon-graph"></i> 20x watch time</i>
+		<i><i class="bi bi-graph-up-arrow icon-graph"></i> zero hardware</i>
+      </span>
+      <span style="opacity: 0.8;">
+        <i class="bi bi-clock-history icon-clock"></i> © 2026 · 24/7 Auto RTMP Live
+      </span>
+    </div>
+
+    <!-- extra footer -->
+    <!-- <div style="display: flex; justify-content: flex-end; margin-top: 0.2rem; font-size: 0.7rem; color: #5e4d93; letter-spacing: 0.5px; gap: 1.2rem;">
+      <span><i class="bi bi-arrows-fullscreen icon-arrows"></i> fit to screen</span>
+      <span><i class="bi bi-stars icon-stars"></i> unique</span>
+      <span><i class="bi bi-palette-fill icon-palette"></i> same color</span>
+    </div> -->
+  </div>
+
+  <script>
+    (function() {
+      const inputField = document.querySelector('.cta-input-group input');
+      if (inputField) {
+        inputField.addEventListener('click', function() {
+          this.select();
+        });
+        inputField.addEventListener('focus', function() {
+          this.setSelectionRange(0, this.value.length);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
